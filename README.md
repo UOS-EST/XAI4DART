@@ -1,7 +1,17 @@
 # XAI4DART
 
-Explainable AI (XAI) framework for DART (Developmental And Reproductive Toxicity) prediction.  
-This project builds and evaluates machine learning models that predict toxicity endpoints using molecular fingerprints, with SHAP-based interpretability.
+**Mechanistically interpretable developmental and reproductive toxicity prediction using AOP-based explainable AI models**
+
+---
+
+## Overview
+
+Developmental and reproductive toxicity (DART) assessment traditionally relies on animal testing, which is resource-intensive and ethically constrained. This study proposes an **AOP (Adverse Outcome Pathway)-anchored explainable AI framework** for DART screening that integrates:
+
+- **In vitro** ToxCast bioassay data (molecular initiating events & key events)
+- **In vivo** OECD test guideline data (adverse outcomes)
+
+Machine learning models were developed for individual AOP events and integrated via a rule-based strategy to classify chemicals by DART concern. The framework was validated using the **EPAA NAM Designathon** reference set, achieving an **F1 score of 0.54** — outperforming a conventional in vivo-only model (F1 = 0.46).
 
 ---
 
@@ -9,48 +19,29 @@ This project builds and evaluates machine learning models that predict toxicity 
 
 ```
 XAI4DART/
-├── data/                         # Input datasets (.xlsx)
+├── data/                    # Input datasets (ToxCast, OECD, etc.)
 ├── module/
-│   ├── main.py                   # Main training & evaluation pipeline
-│   ├── requirements.txt          # Python dependencies
-│   ├── runrun.sh                 # Shell script to run pipeline
-│   ├── run/                      # Model scripts
-│   │   ├── rf.py                 # Random Forest
-│   │   ├── gbt.py                # Gradient Boosting
-│   │   ├── xgb.py                # XGBoost
-│   │   ├── dt.py                 # Decision Tree
-│   │   └── logistic.py           # Logistic Regression
-│   └── utils/                    # Utility modules
-│       ├── read_data.py          # Data loading
-│       ├── common.py             # Parameter grid, shared utils
-│       ├── model_utils.py        # Model helpers
-│       ├── smiles2fing.py        # SMILES → Fingerprint conversion
-│       └── logging_utils.py      # Logging
-├── val_results/                  # Validation results & best model lists
-└── application_EPAA/             # Application to EPAA dataset
-    ├── application.py
-    ├── app_data.xlsx
-    └── app_result/               # Prediction outputs
+│   ├── main.py              # Main training & evaluation pipeline
+│   ├── requirements.txt     # Dependencies
+│   ├── runrun.sh            # Shell script runner
+│   ├── run/                 # Per-model training scripts
+│   │   ├── rf.py            # Random Forest
+│   │   ├── gbt.py           # Gradient Boosting
+│   │   ├── xgb.py           # XGBoost
+│   │   ├── dt.py            # Decision Tree
+│   │   └── logistic.py      # Logistic Regression
+│   └── utils/               # Data loading, fingerprints, logging
+├── val_results/             # Validation results & best model lists
+└── application_EPAA/        # Application to EPAA NAM Designathon dataset
 ```
 
 ---
 
-## Models
+## Models & Molecular Fingerprints
 
-| Model | Description |
-|-------|-------------|
-| Random Forest (RF) | Ensemble of decision trees |
-| Gradient Boosting (GBT) | Sequential boosting ensemble |
-| XGBoost (XGB) | Optimized gradient boosting |
-| Decision Tree (DT) | Single tree classifier |
-| Logistic Regression | Linear baseline |
-
-## Molecular Fingerprints
-
-- Morgan
-- MACCS
-- RDKit
-- Layered
+| Models | Fingerprints |
+|--------|-------------|
+| Random Forest, Gradient Boosting, XGBoost, Decision Tree, Logistic Regression | Morgan, MACCS, RDKit, Layered |
 
 ---
 
@@ -61,22 +52,7 @@ cd module
 python main.py
 ```
 
-Or use the shell script:
-
-```bash
-bash runrun.sh
-```
-
-Results are saved as `.xlsx` in the `data/` and `val_results/` directories.
-
 ---
 
-## Requirements
-
-Install dependencies:
-
-```bash
-pip install -r module/requirements.txt
-```
-
-Key packages: `scikit-learn`, `xgboost`, `rdkit`, `shap`, `imbalanced-learn`, `pandas`, `openpyxl`
+## Keywords
+`DART` · `Adverse Outcome Pathway (AOP)` · `Explainable AI` · `New Approach Methodologies (NAMs)` · `Chemical Prioritization` · `ToxCast` · `OECD`
